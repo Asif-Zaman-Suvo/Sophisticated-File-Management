@@ -6,10 +6,12 @@ const LoginForm = () => {
   return (
     <form action={doSocialLogin}>
       <Button
+        style={{
+          backgroundColor: "black",
+        }}
         startIcon={<GitHubIcon />}
         sx={{ mt: 2 }}
         variant="contained"
-        color="primary"
         type="submit"
         name="action"
         value="github"

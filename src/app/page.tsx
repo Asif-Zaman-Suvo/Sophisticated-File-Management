@@ -17,8 +17,8 @@ export default async function Home() {
           minHeight: "100vh",
         }}
       >
-        <Typography variant="h5" component="h1" gutterBottom>
-          Its time to sign in
+        <Typography variant="h4" component="h1" gutterBottom>
+          Welcome to the File Management Application
         </Typography>
         <LoginForm />
       </Box>
