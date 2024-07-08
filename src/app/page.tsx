@@ -14,7 +14,7 @@ export default async function Home() {
           alignItems: "center",
           justifyContent: "center",
           textAlign: "center",
-          minHeight: "100vh",
+          minHeight: "97vh",
         }}
       >
         <Typography variant="h4" component="h1" gutterBottom>
