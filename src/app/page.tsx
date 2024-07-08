@@ -1,13 +1,10 @@
-import { getServerSession } from "next-auth";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
-import Avatar from "@mui/material/Avatar";
+
+import LoginForm from "@/components/LoginForm/LoginForm";
 
 export default async function Home() {
-  const session = await getServerSession();
-  console.log(session, "sess");
-
   return (
     <Container fixed>
       <Box
@@ -17,25 +14,13 @@ export default async function Home() {
           alignItems: "center",
           justifyContent: "center",
           textAlign: "center",
+          minHeight: "100vh",
         }}
       >
-        {session?.user?.name ? (
-          <Box>
-            <Avatar
-              alt={session?.user?.name}
-              src={session?.user?.image || ""}
-              sx={{ width: 56, height: 56 }}
-            />
-            <Typography variant="h5" component="h1" gutterBottom>
-              Welcome, {session?.user?.name}!
-            </Typography>
-            <Typography variant="body1">
-              You are logged in as {session?.user?.email}.
-            </Typography>
-          </Box>
-        ) : (
-          ""
-        )}
+        <Typography variant="h5" component="h1" gutterBottom>
+          Its time to sign in
+        </Typography>
+        <LoginForm />
       </Box>
     </Container>
   );

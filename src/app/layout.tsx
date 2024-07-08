@@ -1,7 +1,4 @@
-import AuthButton from "@/components/AuthButton/AuthButton";
 import type { Metadata } from "next";
-import { getServerSession } from "next-auth";
-import SessionProvider from "../components/SessionProvider/SessionProvider";
 
 export const metadata: Metadata = {
   title: "Sophisticated File Management",
@@ -13,19 +10,13 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await getServerSession();
   return (
     <html lang="en">
       <head>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </head>
       <body>
-        <SessionProvider session={session}>
-          <main>
-            <AuthButton />
-            {children}
-          </main>
-        </SessionProvider>
+        <main>{children}</main>
       </body>
     </html>
   );

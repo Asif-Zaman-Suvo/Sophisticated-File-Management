@@ -12,6 +12,7 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+    "types": ["@types/node", "@types/cookie"],
     "plugins": [
       {
         "name": "next"
