@@ -4,7 +4,7 @@ import React from "react";
 import { styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import { Box, Input, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -17,6 +17,7 @@ const VisuallyHiddenInput = styled("input")({
   whiteSpace: "nowrap",
   width: 1,
 });
+
 const CustomInput = styled("input")({
   background: "green",
   border: "none",
@@ -32,8 +33,39 @@ const CustomInput = styled("input")({
   },
 });
 
+const FileViewer = styled("div")({
+  marginTop: "20px",
+  border: "1px solid #ccc",
+  padding: "10px",
+  width: "100%",
+  maxWidth: "600px",
+  borderRadius: "5px",
+  boxShadow: "0px 4px 8px rgba(0,0,0,0.1)",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+});
+
+const FileItem = styled("div")({
+  marginBottom: "10px",
+  padding: "5px",
+  width: "100%",
+  textAlign: "left",
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  "& a": {
+    textDecoration: "none",
+    color: "#007bff",
+  },
+  "& a:hover": {
+    textDecoration: "underline",
+  },
+});
+
 export default function FileUpload() {
   const [file, setFile] = React.useState<File | null>(null);
+  const [uploadedFiles, setUploadedFiles] = React.useState<string[]>([]);
 
   function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
     setFile(event.target.files ? event.target.files[0] : null);
@@ -45,18 +77,24 @@ export default function FileUpload() {
     try {
       const data = new FormData();
       data.set("file", file);
-      const res = await fetch("/api/upload", {
+      const res = await fetch("http://localhost:3001/api/upload", {
         method: "POST",
         body: data,
       });
       if (!res?.ok) {
         throw new Error(await res.text());
       }
+      const result = await res.json();
+      console.log("File uploaded:", result.filePath);
+      if (result.filePath) {
+        setUploadedFiles((prev) => [...prev, result.filePath]);
+      }
+      setFile(null); // Clear the selected file
     } catch (e: any) {
-      console.log(e);
+      console.error(e);
     }
   };
-  console.log("Current file:", file);
+
   return (
     <Box
       gap={2}
@@ -86,6 +124,23 @@ export default function FileUpload() {
         </Box>
       </form>
       {file && <Typography variant="h6">{file?.name}</Typography>}
+      {uploadedFiles?.length > 0 && (
+        <FileViewer>
+          <Typography variant="h6">Uploaded Files</Typography>
+          {uploadedFiles?.map((filePath, index) => (
+            <FileItem key={index}>
+              <Typography>{filePath}</Typography>
+              <a
+                href={`http://localhost:3001${filePath}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                View
+              </a>
+            </FileItem>
+          ))}
+        </FileViewer>
+      )}
     </Box>
   );
 }
