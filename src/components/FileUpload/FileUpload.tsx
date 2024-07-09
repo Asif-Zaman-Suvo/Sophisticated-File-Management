@@ -86,14 +86,6 @@ export default function FileUpload() {
         </Box>
       </form>
       {file && <Typography variant="h6">{file?.name}</Typography>}
-
-      <Box
-        display="flex"
-        flexDirection="column"
-        alignItems="center"
-        mt={4}
-        width="100%"
-      ></Box>
     </Box>
   );
 }
