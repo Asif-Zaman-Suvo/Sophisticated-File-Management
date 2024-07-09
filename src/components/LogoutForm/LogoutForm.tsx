@@ -9,7 +9,6 @@ const Logout = () => {
         startIcon={<LogoutIcon />}
         variant="contained"
         color="success"
-        sx={{ mt: 2 }}
         type="submit"
       >
         Sign out
