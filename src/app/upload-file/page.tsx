@@ -1,8 +1,9 @@
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import Logout from "@/components/LogoutForm/LogoutForm";
-import { Avatar, Box, Container, Typography } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 import FileUpload from "@/components/FileUpload/FileUpload";
+import DrawingCanvas from "@/components/DrawingCanvas/DrawingCanvas";
 
 const FileUploadPage = async () => {
   const session = await auth();
@@ -28,10 +29,13 @@ const FileUploadPage = async () => {
           display: "flex",
           paddingTop: "13rem",
           justifyContent: "center",
+          flexDirection: "column",
+          gap: 5,
           alignItems: "center",
         }}
       >
         <FileUpload />
+        <DrawingCanvas />
       </Box>
     </Container>
   );

@@ -130,13 +130,6 @@ export default function FileUpload() {
           {uploadedFiles?.map((filePath, index) => (
             <FileItem key={index}>
               <Typography>{filePath}</Typography>
-              <a
-                href={`http://localhost:3001${filePath}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                View
-              </a>
             </FileItem>
           ))}
         </FileViewer>
