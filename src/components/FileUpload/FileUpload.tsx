@@ -78,7 +78,7 @@ export default function FileUpload() {
       const data = new FormData();
       data.set("file", file);
       const res = await fetch(
-        "http://sophisticated-file-management-backend.vercel.app/api/upload",
+        "http://sophisticated-file-management-backend.vercel.app",
         {
           method: "POST",
           body: data,
