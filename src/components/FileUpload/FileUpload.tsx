@@ -77,10 +77,13 @@ export default function FileUpload() {
     try {
       const data = new FormData();
       data.set("file", file);
-      const res = await fetch("http://localhost:3001/api/upload", {
-        method: "POST",
-        body: data,
-      });
+      const res = await fetch(
+        "http://sophisticated-file-management-backend.vercel.app/api/upload",
+        {
+          method: "POST",
+          body: data,
+        }
+      );
       if (!res?.ok) {
         throw new Error(await res.text());
       }
