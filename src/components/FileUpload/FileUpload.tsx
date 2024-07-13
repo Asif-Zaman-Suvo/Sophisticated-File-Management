@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
@@ -64,37 +64,37 @@ const FileItem = styled("div")({
 });
 
 export default function FileUpload() {
-  const [file, setFile] = React.useState<File | null>(null);
-  const [uploadedFiles, setUploadedFiles] = React.useState<string[]>([]);
+  const [file, setFile] = useState<File | null>(null);
+  const [uploadedFiles, setUploadedFiles] = useState<string[]>([]);
 
   function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
     setFile(event.target.files ? event.target.files[0] : null);
   }
 
-  const handleSubmit = async (event: any) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     if (!file) return;
+
+    const formData = new FormData();
+    formData.append("file", file);
+
     try {
-      const data = new FormData();
-      data.set("file", file);
-      const res = await fetch(
-        "https://sophisticated-file-management-backend.vercel.app/api/upload",
+      const response = await fetch(
+        "http://sophisticated-file-management-backend.vercel.app/api/upload",
         {
           method: "POST",
-          body: data,
+          body: formData,
         }
       );
-      if (!res?.ok) {
-        throw new Error(await res.text());
-      }
-      const result = await res.json();
-      console.log("File uploaded:", result.filePath);
-      if (result.filePath) {
+
+      const result = await response.json();
+      if (result.success) {
         setUploadedFiles((prev) => [...prev, result.filePath]);
+      } else {
+        console.error(result.message);
       }
-      setFile(null); // Clear the selected file
-    } catch (e: any) {
-      console.error(e);
+    } catch (error) {
+      console.error("Error uploading file:", error);
     }
   };
 
@@ -126,11 +126,11 @@ export default function FileUpload() {
           <CustomInput type="submit" value="UPLOAD FILE" />
         </Box>
       </form>
-      {file && <Typography variant="h6">{file?.name}</Typography>}
-      {uploadedFiles?.length > 0 && (
+      {file && <Typography variant="h6">{file.name}</Typography>}
+      {uploadedFiles.length > 0 && (
         <FileViewer>
           <Typography variant="h6">Uploaded Files</Typography>
-          {uploadedFiles?.map((filePath, index) => (
+          {uploadedFiles.map((filePath, index) => (
             <FileItem key={index}>
               <Typography>{filePath}</Typography>
             </FileItem>
