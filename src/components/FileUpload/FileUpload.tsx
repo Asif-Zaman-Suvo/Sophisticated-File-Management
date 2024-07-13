@@ -66,6 +66,7 @@ const FileItem = styled("div")({
 export default function FileUpload() {
   const [file, setFile] = useState<File | null>(null);
   const [uploadedFiles, setUploadedFiles] = useState<string[]>([]);
+  console.log(uploadedFiles, "uploaded files");
 
   function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
     setFile(event.target.files ? event.target.files[0] : null);
@@ -74,6 +75,7 @@ export default function FileUpload() {
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     if (!file) return;
+    console.log(file, "file");
 
     const formData = new FormData();
     formData.append("file", file);
@@ -127,10 +129,11 @@ export default function FileUpload() {
         </Box>
       </form>
       {file && <Typography variant="h6">{file.name}</Typography>}
-      {uploadedFiles.length > 0 && (
+
+      {uploadedFiles?.length > 0 && (
         <FileViewer>
           <Typography variant="h6">Uploaded Files</Typography>
-          {uploadedFiles.map((filePath, index) => (
+          {uploadedFiles?.map((filePath, index) => (
             <FileItem key={index}>
               <Typography>{filePath}</Typography>
             </FileItem>
