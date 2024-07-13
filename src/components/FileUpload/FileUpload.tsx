@@ -80,7 +80,7 @@ export default function FileUpload() {
 
     try {
       const response = await fetch(
-        "https://sophisticated-file-management-backend.vercel.app/api/upload",
+        "https://sophisticated-management-backend-production.up.railway.app/api/upload",
         {
           method: "POST",
           body: formData,
