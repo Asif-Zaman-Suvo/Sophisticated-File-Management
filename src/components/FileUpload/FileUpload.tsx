@@ -91,10 +91,14 @@ export default function FileUpload() {
 
       const result = await response.json();
       console.log(result, "result");
-      if (result.success) {
-        setUploadedFiles((prev) => [...prev, result.filePath]);
+      if (result) {
+        setUploadedFiles((prev) => {
+          const updatedFiles = [...prev, result.filePath];
+          console.log(updatedFiles, "updated uploaded files");
+          return updatedFiles;
+        });
       } else {
-        console.error(result.message);
+        console.error("file upload failed");
       }
     } catch (error) {
       console.error("Error uploading file:", error);
@@ -129,7 +133,7 @@ export default function FileUpload() {
           <CustomInput type="submit" value="UPLOAD FILE" />
         </Box>
       </form>
-      {file && <Typography variant="h6">{file.name}</Typography>}
+      {file && <Typography variant="h6">{file?.name}</Typography>}
 
       {uploadedFiles?.length > 0 && (
         <FileViewer>
