@@ -90,6 +90,7 @@ export default function FileUpload() {
       );
 
       const result = await response.json();
+      console.log(result, "result");
       if (result.success) {
         setUploadedFiles((prev) => [...prev, result.filePath]);
       } else {
